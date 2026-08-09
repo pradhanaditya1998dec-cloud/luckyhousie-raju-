@@ -1208,22 +1208,24 @@ export default function AdminPage() {
                   null on new game creation, but the key ensures even internal
                   component state (e.g. hover, last-called highlight) is also cleared.
                 */}
-                <section className="admin-card admin-board-card">
-                  <h2>Number Board</h2>
-                  <p className="hint">
-                    {game?.status === "live"
-                      ? "Number board of the current live game."
-                      : game?.status === "closed"
-                        ? "Game ended — create a new game to play again"
-                        : "Start the game to view the number board"}
-                  </p>
-                  <NumberBoard
-                    key={gameId ?? "empty"}
-                    calledNumbers={calledArr}
-                    interactive={false}
-                    onPickNumber={drawOne}
-                  />
-                </section>
+                {isSuperAdmin && (
+                  <section className="admin-card admin-board-card">
+                    <h2>Number Board</h2>
+                    <p className="hint">
+                      {game?.status === "live"
+                        ? "Number board of the current live game."
+                        : game?.status === "closed"
+                          ? "Game ended — create a new game to play again"
+                          : "Start the game to view the number board"}
+                    </p>
+                    <NumberBoard
+                      key={gameId ?? "empty"}
+                      calledNumbers={calledArr}
+                      interactive={false}
+                      onPickNumber={drawOne}
+                    />
+                  </section>
+                )}
 
               </>)}
 
