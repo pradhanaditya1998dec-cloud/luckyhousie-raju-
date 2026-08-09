@@ -514,54 +514,54 @@ export default function GamePage() {
   // }
 
   async function handleBookTickets() {
-  if (!bookingName.trim()) {
-    setNameError(true);
-    setTimeout(() => setNameError(false), 500);
-    return;
-  }
-
-  setIsBooking(true);
-  try {
-    const generatedNumber = "ID-" + Math.floor(100000 + Math.random() * 900000);
-    const result = await bookTicketsWithTransaction(gameId, selectedTickets, {
-      userName: bookingName.trim(),
-      userPhone: generatedNumber,
-    });
-
-    clearSelection();
-
-    if (result.booked.length > 0) {
-      openWhatsAppBooking(result.booked, adminPhone, bookingName.trim());
+    if (!bookingName.trim()) {
+      setNameError(true);
+      setTimeout(() => setNameError(false), 500);
+      return;
     }
 
-    if (result.failed?.length > 0) {
-      showTimedToast({
-        id: Date.now(),
-        user: "Partial Booking",
-        label: `Ticket(s) ${result.booked.join(", ")} booked. ${result.failed.join(", ")} was already taken!`,
-        isWarning: true,
-      }, 8000);
-    } else {
-      showTimedToast({ id: Date.now(), user: "Success", label: "Tickets booked successfully!", isError: false }, 3000);
-    }
+    setIsBooking(true);
+    try {
+      const generatedNumber = "ID-" + Math.floor(100000 + Math.random() * 900000);
+      const result = await bookTicketsWithTransaction(gameId, selectedTickets, {
+        userName: bookingName.trim(),
+        userPhone: generatedNumber,
+      });
 
-  } catch (err) {
-    console.error("Booking error:", err);
-
-    if (err.code === "ALL_TICKETS_BOOKED") {
-      showTimedToast({ id: Date.now(), user: "Oops!", label: "Someone was faster — please select another ticket.", isError: true }, 5000);
       clearSelection();
-    } else if (err.code === "permission-denied") {
-      showTimedToast({ id: Date.now(), user: "Database Error", label: "Booking permission denied. Please try again.", isError: true }, 6000);
-    } else if (err.code === "aborted") {
-      showTimedToast({ id: Date.now(), user: "System Busy", label: "High traffic — please try again.", isError: true }, 6000);
-    } else {
-      showTimedToast({ id: Date.now(), user: "Connection Error", label: `Booking failed: ${err.message || "connection issue"}. Please try again.`, isError: true }, 6000);
+
+      if (result.booked.length > 0) {
+        openWhatsAppBooking(result.booked, adminPhone, bookingName.trim());
+      }
+
+      if (result.failed?.length > 0) {
+        showTimedToast({
+          id: Date.now(),
+          user: "Partial Booking",
+          label: `Ticket(s) ${result.booked.join(", ")} booked. ${result.failed.join(", ")} was already taken!`,
+          isWarning: true,
+        }, 8000);
+      } else {
+        showTimedToast({ id: Date.now(), user: "Success", label: "Tickets booked successfully!", isError: false }, 3000);
+      }
+
+    } catch (err) {
+      console.error("Booking error:", err);
+
+      if (err.code === "ALL_TICKETS_BOOKED") {
+        showTimedToast({ id: Date.now(), user: "Oops!", label: "Someone was faster — please select another ticket.", isError: true }, 5000);
+        clearSelection();
+      } else if (err.code === "permission-denied") {
+        showTimedToast({ id: Date.now(), user: "Database Error", label: "Booking permission denied. Please try again.", isError: true }, 6000);
+      } else if (err.code === "aborted") {
+        showTimedToast({ id: Date.now(), user: "System Busy", label: "High traffic — please try again.", isError: true }, 6000);
+      } else {
+        showTimedToast({ id: Date.now(), user: "Connection Error", label: `Booking failed: ${err.message || "connection issue"}. Please try again.`, isError: true }, 6000);
+      }
+    } finally {
+      setIsBooking(false);
     }
-  } finally {
-    setIsBooking(false);
   }
-}
 
 
   function formatTime(ts) {
@@ -680,7 +680,7 @@ export default function GamePage() {
       <header className="site-header">
         <div className="header-content">
           <div>
-            <h1 className="site-title">TAMBOLA</h1>
+            <h1 className="site-title">Lucky Housie</h1>
             {/* <p className="site-subtitle">
               {gameId ? `Daily Housie — ${formatGameId(gameId)}` : "Daily Housie"}
             </p> */}
@@ -716,7 +716,7 @@ export default function GamePage() {
 
       {!game?.winners?.fullHouse && !game?.winners?.secondFullHouse && (
         <div>
-          <img className="tambola-banner" src="/assets/banner.webp" alt="Welcome to Housie" />
+          <img className="tambola-banner" src="/assets/banner-2.webp" alt="Welcome to Housie" />
         </div>
       )}
 

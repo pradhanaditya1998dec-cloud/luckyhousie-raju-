@@ -2,21 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #1a1a24;
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --bg: #030712;
+  --bg2: #0f172a;
+  --bg3: #1e293b;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
   --accent: #f5a623;
   --accent2: #e8503a;
-  --green: #3ecf8e;
-  --text: #f0eff5;
-  --text-muted: #8b8a9b;
-  --text-dim: #55546a;
-  --radius: 10px;
-  --ticket-free: #1a1a24;
-  --ticket-booked: #0f1f14;
-  --card: #12121a;
+  --green: #10b981;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --radius: 12px;
+  --ticket-free: #1e293b;
+  --ticket-booked: #064e3b;
+  --card: #0f172a;
+  --ticket-cutout-bg: #141b2d;
 }
 
 *,
@@ -29,12 +30,12 @@
 
 html {
   font-size: 16px;
-
 }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
+  background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 50%, #030712 100%);
+  background-attachment: fixed;
   color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -47,12 +48,14 @@ a {
 
 /* ── Site Header ─────────────────────────────────────── */
 .site-header {
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 0 24px;
-  position: relative;
+  position: sticky;
   top: 0;
   z-index: 50;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
 .header-content {
@@ -66,10 +69,13 @@ a {
 
 .site-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   letter-spacing: 0.08em;
-  color: var(--accent);
+  background: linear-gradient(135deg, #f5a623 0%, #ff5e62 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1;
+  font-weight: 800;
 }
 
 .site-subtitle {
@@ -612,25 +618,24 @@ a {
 }
 
 .ticket-sheet {
-  background: #111318;
-  /* Deep Gunmetal Gray */
-  padding: 16px 12px;
-  border-radius: var(--radius);
-  border: 1px solid #2a2d35;
+  background: rgba(30, 41, 59, 0.4) !important;
+  backdrop-filter: blur(8px);
+  padding: 20px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   margin-bottom: 24px;
-  box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .sheet-title {
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #e2e8f0;
-  /* Soft off-white label */
-  margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.1em;
+  color: #f8fafc;
+  margin-bottom: 12px;
   padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .no-tickets {
@@ -686,17 +691,14 @@ a {
 
 .ticket-card {
   position: relative;
-  border-radius: 12px;
-  background: #fafaf7 !important;
-  /* retro off-white paper */
+  border-radius: 14px;
+  background: #ffffff !important;
   border: 1.5px solid var(--ticket-accent) !important;
-  /* Colored card border */
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.25),
-    0 1px 3px rgba(0, 0, 0, 0.15);
-  transition: all 0.22s ease-in-out;
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   color: #1e293b;
-  /* dark ink gray */
   cursor: pointer;
   user-select: none;
 }
@@ -711,7 +713,8 @@ a {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--ticket-cutout-bg, var(--card, #12121a));
+  background: #0f172a;
+  /* Blends with body/sheet glass background */
   border: 1.5px solid var(--ticket-accent);
   z-index: 10;
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.6);
@@ -731,25 +734,22 @@ a {
 }
 
 .ticket-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
   box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.35),
-    0 2px 6px rgba(0, 0, 0, 0.2);
+    0 18px 32px rgba(0, 0, 0, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.2);
   border-color: var(--ticket-accent) !important;
 }
 
 .ticket-card.booked {
   border-color: var(--ticket-accent) !important;
-  /* Keep colored card border */
-  opacity: 0.65 !important;
-  /* Clear disabled fade */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  opacity: 0.7 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   cursor: not-allowed !important;
 }
 
 .ticket-card.booked * {
   pointer-events: none;
-  /* Make sure child elements don't block not-allowed cursor */
 }
 
 .ticket-card.booked::before,
@@ -759,8 +759,7 @@ a {
 
 .ticket-card.booked:hover {
   transform: none !important;
-  /* No elevation on hover for disabled state */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 .ticket-card.live {
@@ -780,12 +779,11 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  border-bottom: 2px dashed rgba(255, 255, 255, 0.15);
-  /* vintage dashed perforated tear-line */
+  padding: 10px 14px;
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.25);
   background: var(--ticket-header-bg);
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   position: relative;
   transition: all 0.22s ease;
 }
@@ -795,7 +793,6 @@ a {
   font-size: 0.85rem;
   font-weight: 700;
   color: #ffd369 !important;
-  /* Gold ticket ID */
   display: flex;
   align-items: center;
   gap: 6px;
@@ -806,7 +803,6 @@ a {
   font-size: 0.75rem;
   font-weight: 700;
   color: #ffffff !important;
-  /* White player name */
   max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -819,12 +815,12 @@ a {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 2px 7px;
-  border-radius: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
 }
 
 .booked-badge {
-  background: #27ae60 !important;
+  background: #10b981 !important;
   /* solid green */
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -832,24 +828,22 @@ a {
 }
 
 .free-badge {
-  background: #0284c7 !important;
+  background: #3b82f6 !important;
   /* solid blue */
   color: #ffffff !important;
   /* white text */
-  border: 1.5px solid #ffd369 !important;
-  /* gold border */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
 
 .ticket-card:hover .free-badge {
-  background: #0369a1 !important;
-  /* deeper blue highlight on hover */
+  background: #2563eb !important;
   transform: scale(1.05);
 }
 
 .selected-badge {
-  background: #e67e22 !important;
+  background: #f59e0b !important;
   /* solid orange */
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -859,22 +853,18 @@ a {
 /* Ticket grid */
 .ticket-grid {
   padding: 0;
-  /* Let grid borders touch the ticket edges */
-  background: #FFF;
-  /* warm cream matching screenshot */
-  border-bottom-left-radius: 11px;
-  border-bottom-right-radius: 11px;
+  background: #fcfbf7;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* Clips corner cells to card radius */
 }
 
 .ticket-row {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  /* darker warm dividers */
+  border-bottom: 1px solid rgba(var(--ticket-accent-rgb), 0.18);
 }
 
 .ticket-row:last-child {
@@ -882,17 +872,17 @@ a {
 }
 
 .ticket-cell {
-  aspect-ratio: 1;
+  aspect-ratio: 1.15;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-family: 'DM Mono', monospace;
   font-weight: 700;
-  color: #1e293b;
-  border-right: 1px solid rgba(0, 0, 0, 0.25);
-  /* darker warm dividers */
+  color: #0f172a;
+  border-right: 1px solid rgba(var(--ticket-accent-rgb), 0.18);
   position: relative;
+  transition: all 0.2s ease;
 }
 
 .ticket-cell:last-child {
@@ -900,26 +890,25 @@ a {
 }
 
 .ticket-cell.blank {
-  background: transparent;
+  background: #f9f8f4;
 }
 
 .ticket-cell.active {
-  background: rgba(0, 0, 0, 0.01);
-  color: #0f172a;
+  background: #ffffff;
+  cursor: pointer;
 }
 
 .ticket-cell.active:hover {
-  background: rgba(0, 0, 0, 0.04);
-  color: #000;
+  background: rgba(var(--ticket-accent-rgb), 0.08);
+  color: var(--ticket-accent);
 }
 
 .ticket-cell.marked {
-  background: rgba(220, 38, 38, 0.04) !important;
-  color: #b91c1c !important;
-  /* vintage stamp red */
+  background: rgba(239, 68, 68, 0.06) !important;
+  color: #ef4444 !important;
   font-weight: 800;
   position: relative;
-  text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.1);
+  text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.15);
 }
 
 .ticket-cell.marked::after {
@@ -928,17 +917,14 @@ a {
   width: 82%;
   height: 82%;
   border-radius: 50%;
-  border: 2px solid rgba(185, 28, 28, 0.65);
-  /* outer ink ring */
+  border: 2px solid rgba(239, 68, 68, 0.7);
   background: transparent;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-8deg);
-  /* tilted stamp! */
   pointer-events: none;
   animation: retroStamp 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.35);
-  /* double ring! */
+  box-shadow: inset 0 0 0 1.5px rgba(239, 68, 68, 0.35);
 }
 
 @keyframes retroStamp {
@@ -2224,21 +2210,23 @@ a {
 }
 
 .ticket-sheet {
-  background: #111318 !important;
-  /* Deep Gunmetal Gray */
-  border: 1px solid #2a2d35 !important;
-  box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.4);
+  background: rgba(30, 41, 59, 0.4) !important;
+  backdrop-filter: blur(8px);
+  padding: 20px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .sheet-title {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #e2e8f0;
-  /* Soft off-white label */
-  margin-bottom: 10px;
-  padding-bottom: 6px;
+  color: #f8fafc;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 

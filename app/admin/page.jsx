@@ -75,7 +75,7 @@ const AUDIO_DURATION_FALLBACK_MS = {
 
 // ── Icons ─────────────────────────────────────────────────
 function IconSettings() {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>;
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" /></svg>;
 }
 
 function IconGrid() {
@@ -144,8 +144,8 @@ export default function AdminPage() {
     return subscribeAdminSettings(s => {
       setAdminSettings(s);
       setSettingsForm({
-        adminPhone:  s.adminPhone  || "",
-        gameName:    s.gameName    || "",
+        adminPhone: s.adminPhone || "",
+        gameName: s.gameName || "",
         ticketPrice: s.ticketPrice || "",
       });
     });
@@ -158,8 +158,8 @@ export default function AdminPage() {
     setSettingsMsg("");
     try {
       await saveAdminSettings({
-        adminPhone:  settingsForm.adminPhone.trim(),
-        gameName:    settingsForm.gameName.trim(),
+        adminPhone: settingsForm.adminPhone.trim(),
+        gameName: settingsForm.gameName.trim(),
         ticketPrice: settingsForm.ticketPrice.trim(),
       });
       setSettingsMsg("✓ Settings saved.");
@@ -398,10 +398,10 @@ export default function AdminPage() {
           userPhone: t.userPhone || null,
           claimedAt: Date.now(),
         }));
-        
+
         const existingIds = new Set(existingWinners.map(w => w.ticketId));
         const uniqueNew = newWinners.filter(w => !existingIds.has(w.ticketId));
-        
+
         if (uniqueNew.length > 0) {
           const finalWinners = [...existingWinners, ...uniqueNew];
           await recordAllWinners(gameId, type, finalWinners);
@@ -794,19 +794,19 @@ export default function AdminPage() {
   }
 
   function confirmReopenGame() {
-  setModal({
-    open: true,
-    title: "Reopen Game?",
-    message: "This will reopen the game. All booked tickets and player info are still intact.",
-    confirmLabel: "Yes, Reopen",
-    danger: false,
-    onConfirm: async () => {
-      setModal(m => ({ ...m, open: false }));
-      await reopenGame(gameId);
-      success("Game reopened.");
-    },
-  });
-}
+    setModal({
+      open: true,
+      title: "Reopen Game?",
+      message: "This will reopen the game. All booked tickets and player info are still intact.",
+      confirmLabel: "Yes, Reopen",
+      danger: false,
+      onConfirm: async () => {
+        setModal(m => ({ ...m, open: false }));
+        await reopenGame(gameId);
+        success("Game reopened.");
+      },
+    });
+  }
 
   const ticketList = Object.values(tickets).sort((a, b) => a.id.localeCompare(b.id));
   const freeTickets = ticketList.filter(t => t.status === "free");
@@ -833,7 +833,7 @@ export default function AdminPage() {
       <div className="admin-login">
         <div className="login-card">
           <h1>Admin Login</h1>
-          <p>Tambola Game Console</p>
+          <p>Game Console</p>
           <form onSubmit={handleLogin}>
             <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="admin-input" required />
             <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="admin-input" required />
@@ -1161,7 +1161,7 @@ export default function AdminPage() {
                 <section className="admin-card">
                   <h2>WhatsApp Support Settings</h2>
                   <p className="hint">Include country code, no + or spaces. E.g. <code>917628863362</code></p>
-                  
+
                   <form onSubmit={handleSaveSettings} style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "12px" }}>
                     <div style={{ display: "flex", gap: "10px", alignItems: "stretch" }}>
                       <input
