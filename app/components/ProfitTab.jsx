@@ -116,7 +116,8 @@ export default function ProfitTab({ isSuperAdmin = false }) {
       const bookedCount = bookedTickets.length;
       const paidCount = bookedTickets.filter(t => t.paymentStatus === "paid").length;
 
-      const gameRevenue = bookedCount * ticketPrice;
+      const totalTicketsCount = Object.keys(tickets).length || bookedCount;
+      const gameRevenue = totalTicketsCount * ticketPrice;
       const gameCashRevenue = paidCount * ticketPrice;
 
       // Prize pool
@@ -158,7 +159,8 @@ export default function ProfitTab({ isSuperAdmin = false }) {
     const totalPaid = bookedTickets.filter(t => t.paymentStatus === "paid").length;
     const totalUnpaid = totalBooked - totalPaid;
 
-    const totalRevenue = totalBooked * ticketPrice;
+    const totalTicketsCount = Object.keys(tickets).length || totalBooked;
+    const totalRevenue = totalTicketsCount * ticketPrice;
     const realizedRevenue = totalPaid * ticketPrice;
     const pendingRevenue = totalUnpaid * ticketPrice;
 
@@ -285,7 +287,9 @@ export default function ProfitTab({ isSuperAdmin = false }) {
                     const isEnabled = key === "fullHouse" ? true : !!rules[key];
                     if (isEnabled) pz += Number(amount) || 0;
                   });
-                  const prof = rev - pz;
+                  const totalTicketsCount = Object.keys(g.tickets || {}).length || bookedCount;
+                  const potentialRev = totalTicketsCount * ticketPrice;
+                  const prof = potentialRev - pz;
                   
                   const isSelected = g.id === selectedGameId;
                   const timeStr = formatTimeOnly(g.id);
@@ -459,13 +463,13 @@ export default function ProfitTab({ isSuperAdmin = false }) {
           {/* Profit summary banner */}
           <div className={`profit-summary-box ${stats.estProfit >= 0 ? "positive" : "negative"}`}>
             <div className="profit-summary-title">
-              {stats.estProfit >= 0 ? "📈 Estimated Profit" : "📉 Estimated Loss"}
+              {stats.estProfit >= 0 ? "📈 Projected Profit" : "📉 Projected Loss"}
             </div>
             <div className="profit-summary-value">
               {stats.estProfit >= 0 ? "+" : ""}₹{stats.estProfit}
             </div>
             <p className="profit-summary-desc">
-              Based on overall bookings. Your current cash profit (paid bookings only) is{" "}
+              Based on all tickets being sold. Your current cash profit (paid bookings only) is{" "}
               <strong>
                 {stats.realizedProfit >= 0 ? "+" : ""}₹{stats.realizedProfit}
               </strong>.
