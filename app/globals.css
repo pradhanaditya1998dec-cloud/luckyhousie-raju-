@@ -29,6 +29,7 @@
 
 html {
   font-size: 16px;
+
 }
 
 body {
@@ -611,7 +612,8 @@ a {
 }
 
 .ticket-sheet {
-  background: #111318; /* Deep Gunmetal Gray */
+  background: #111318;
+  /* Deep Gunmetal Gray */
   padding: 16px 12px;
   border-radius: var(--radius);
   border: 1px solid #2a2d35;
@@ -622,7 +624,8 @@ a {
 .sheet-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #e2e8f0; /* Soft off-white label */
+  color: #e2e8f0;
+  /* Soft off-white label */
   margin-bottom: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -640,32 +643,43 @@ a {
 /* ── Ticket Card ─────────────────────────────────────── */
 /* ── Ticket Card ─────────────────────────────────────── */
 .ticket-color-0 {
-  --ticket-header-bg: linear-gradient(135deg, #9e6b72 0%, #5e3038 100%); /* Dark Rose */
+  --ticket-header-bg: linear-gradient(135deg, #9e6b72 0%, #5e3038 100%);
+  /* Dark Rose */
   --ticket-accent: #9e6b72;
   --ticket-accent-rgb: 158, 107, 114;
 }
+
 .ticket-color-1 {
-  --ticket-header-bg: linear-gradient(135deg, #b8836a 0%, #7a4a30 100%); /* Dark Sandy Tan */
+  --ticket-header-bg: linear-gradient(135deg, #b8836a 0%, #7a4a30 100%);
+  /* Dark Sandy Tan */
   --ticket-accent: #b8836a;
   --ticket-accent-rgb: 184, 131, 106;
 }
+
 .ticket-color-2 {
-  --ticket-header-bg: linear-gradient(135deg, #8fa040 0%, #556018 100%); /* Dark Olive */
+  --ticket-header-bg: linear-gradient(135deg, #8fa040 0%, #556018 100%);
+  /* Dark Olive */
   --ticket-accent: #8fa040;
   --ticket-accent-rgb: 143, 160, 64;
 }
+
 .ticket-color-3 {
-  --ticket-header-bg: linear-gradient(135deg, #52a866 0%, #28663a 100%); /* Dark Fresh Green */
+  --ticket-header-bg: linear-gradient(135deg, #52a866 0%, #28663a 100%);
+  /* Dark Fresh Green */
   --ticket-accent: #52a866;
   --ticket-accent-rgb: 82, 168, 102;
 }
+
 .ticket-color-4 {
-  --ticket-header-bg: linear-gradient(135deg, #5aafb8 0%, #28686e 100%); /* Dark Aqua Teal */
+  --ticket-header-bg: linear-gradient(135deg, #5aafb8 0%, #28686e 100%);
+  /* Dark Aqua Teal */
   --ticket-accent: #5aafb8;
   --ticket-accent-rgb: 90, 175, 184;
 }
+
 .ticket-color-5 {
-  --ticket-header-bg: linear-gradient(135deg, #7a82b8 0%, #3c4480 100%); /* Dark Slate Blue */
+  --ticket-header-bg: linear-gradient(135deg, #7a82b8 0%, #3c4480 100%);
+  /* Dark Slate Blue */
   --ticket-accent: #7a82b8;
   --ticket-accent-rgb: 122, 130, 184;
 }
@@ -673,13 +687,16 @@ a {
 .ticket-card {
   position: relative;
   border-radius: 12px;
-  background: #fafaf7 !important; /* retro off-white paper */
-  border: 1.5px solid var(--ticket-accent) !important; /* Colored card border */
-  box-shadow: 
+  background: #fafaf7 !important;
+  /* retro off-white paper */
+  border: 1.5px solid var(--ticket-accent) !important;
+  /* Colored card border */
+  box-shadow:
     0 6px 16px rgba(0, 0, 0, 0.25),
     0 1px 3px rgba(0, 0, 0, 0.15);
   transition: all 0.22s ease-in-out;
-  color: #1e293b; /* dark ink gray */
+  color: #1e293b;
+  /* dark ink gray */
   cursor: pointer;
   user-select: none;
 }
@@ -689,7 +706,8 @@ a {
 .ticket-card::after {
   content: '';
   position: absolute;
-  top: 32px; /* Align with the perforated line */
+  top: 32px;
+  /* Align with the perforated line */
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -699,11 +717,13 @@ a {
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.6);
   transition: all 0.22s ease;
 }
+
 .ticket-card::before {
   left: -8px;
   border-left: 0;
   clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
 }
+
 .ticket-card::after {
   right: -8px;
   border-right: 0;
@@ -712,27 +732,34 @@ a {
 
 .ticket-card:hover {
   transform: translateY(-3px);
-  box-shadow: 
+  box-shadow:
     0 12px 24px rgba(0, 0, 0, 0.35),
     0 2px 6px rgba(0, 0, 0, 0.2);
   border-color: var(--ticket-accent) !important;
 }
 
 .ticket-card.booked {
-  border-color: var(--ticket-accent) !important; /* Keep colored card border */
-  opacity: 0.65 !important; /* Clear disabled fade */
+  border-color: var(--ticket-accent) !important;
+  /* Keep colored card border */
+  opacity: 0.65 !important;
+  /* Clear disabled fade */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
   cursor: not-allowed !important;
 }
+
 .ticket-card.booked * {
-  pointer-events: none; /* Make sure child elements don't block not-allowed cursor */
+  pointer-events: none;
+  /* Make sure child elements don't block not-allowed cursor */
 }
+
 .ticket-card.booked::before,
 .ticket-card.booked::after {
   border-color: var(--ticket-accent);
 }
+
 .ticket-card.booked:hover {
-  transform: none !important; /* No elevation on hover for disabled state */
+  transform: none !important;
+  /* No elevation on hover for disabled state */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
 }
 
@@ -754,7 +781,8 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  border-bottom: 2px dashed rgba(255, 255, 255, 0.15); /* vintage dashed perforated tear-line */
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.15);
+  /* vintage dashed perforated tear-line */
   background: var(--ticket-header-bg);
   border-top-left-radius: 11px;
   border-top-right-radius: 11px;
@@ -766,7 +794,8 @@ a {
   font-family: 'DM Mono', monospace;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #ffd369 !important; /* Gold ticket ID */
+  color: #ffd369 !important;
+  /* Gold ticket ID */
   display: flex;
   align-items: center;
   gap: 6px;
@@ -776,7 +805,8 @@ a {
 .ticket-owner {
   font-size: 0.75rem;
   font-weight: 700;
-  color: #ffffff !important; /* White player name */
+  color: #ffffff !important;
+  /* White player name */
   max-width: 130px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -794,27 +824,33 @@ a {
 }
 
 .booked-badge {
-  background: #27ae60 !important; /* solid green */
+  background: #27ae60 !important;
+  /* solid green */
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .free-badge {
-  background: #0284c7 !important; /* solid blue */
-  color: #ffffff !important; /* white text */
-  border: 1.5px solid #ffd369 !important; /* gold border */
+  background: #0284c7 !important;
+  /* solid blue */
+  color: #ffffff !important;
+  /* white text */
+  border: 1.5px solid #ffd369 !important;
+  /* gold border */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
 
 .ticket-card:hover .free-badge {
-  background: #0369a1 !important; /* deeper blue highlight on hover */
+  background: #0369a1 !important;
+  /* deeper blue highlight on hover */
   transform: scale(1.05);
 }
 
 .selected-badge {
-  background: #e67e22 !important; /* solid orange */
+  background: #e67e22 !important;
+  /* solid orange */
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -822,19 +858,23 @@ a {
 
 /* Ticket grid */
 .ticket-grid {
-  padding: 0; /* Let grid borders touch the ticket edges */
-  background: #FFF; /* warm cream matching screenshot */
+  padding: 0;
+  /* Let grid borders touch the ticket edges */
+  background: #FFF;
+  /* warm cream matching screenshot */
   border-bottom-left-radius: 11px;
   border-bottom-right-radius: 11px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Clips corner cells to card radius */
+  overflow: hidden;
+  /* Clips corner cells to card radius */
 }
 
 .ticket-row {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25); /* darker warm dividers */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  /* darker warm dividers */
 }
 
 .ticket-row:last-child {
@@ -850,7 +890,8 @@ a {
   font-family: 'DM Mono', monospace;
   font-weight: 700;
   color: #1e293b;
-  border-right: 1px solid rgba(0, 0, 0, 0.25); /* darker warm dividers */
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  /* darker warm dividers */
   position: relative;
 }
 
@@ -874,7 +915,8 @@ a {
 
 .ticket-cell.marked {
   background: rgba(220, 38, 38, 0.04) !important;
-  color: #b91c1c !important; /* vintage stamp red */
+  color: #b91c1c !important;
+  /* vintage stamp red */
   font-weight: 800;
   position: relative;
   text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.1);
@@ -886,14 +928,17 @@ a {
   width: 82%;
   height: 82%;
   border-radius: 50%;
-  border: 2px solid rgba(185, 28, 28, 0.65); /* outer ink ring */
+  border: 2px solid rgba(185, 28, 28, 0.65);
+  /* outer ink ring */
   background: transparent;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-8deg); /* tilted stamp! */
+  transform: translate(-50%, -50%) rotate(-8deg);
+  /* tilted stamp! */
   pointer-events: none;
   animation: retroStamp 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.35); /* double ring! */
+  box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.35);
+  /* double ring! */
 }
 
 @keyframes retroStamp {
@@ -901,6 +946,7 @@ a {
     transform: translate(-50%, -50%) scale(1.6) rotate(-30deg);
     opacity: 0;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1) rotate(-8deg);
     opacity: 1;
@@ -2178,7 +2224,8 @@ a {
 }
 
 .ticket-sheet {
-  background: #111318 !important; /* Deep Gunmetal Gray */
+  background: #111318 !important;
+  /* Deep Gunmetal Gray */
   border: 1px solid #2a2d35 !important;
   box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.4);
 }
@@ -2188,7 +2235,8 @@ a {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #e2e8f0; /* Soft off-white label */
+  color: #e2e8f0;
+  /* Soft off-white label */
   margin-bottom: 10px;
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -2212,11 +2260,12 @@ a {
 /* Selected overrides booked border */
 .ticket-card.selected-ticket {
   border-color: var(--accent) !important;
-  box-shadow: 
+  box-shadow:
     0 12px 24px rgba(245, 166, 35, 0.2),
     0 0 0 2px var(--accent) !important;
   transform: translateY(-4px);
 }
+
 .ticket-card.selected-ticket::before,
 .ticket-card.selected-ticket::after {
   border-color: var(--accent);
@@ -3091,7 +3140,8 @@ a {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  background: #cbd5e1; /* grid line effect */
+  background: #cbd5e1;
+  /* grid line effect */
   padding: 1px;
   border-radius: 3px;
 }
@@ -3110,7 +3160,8 @@ a {
   font-family: 'DM Mono', monospace;
   font-size: 0.60rem;
   font-weight: 700;
-  background: #fafaf7; /* cell white */
+  background: #fafaf7;
+  /* cell white */
   color: #1e293b;
 }
 
@@ -3614,7 +3665,9 @@ a {
 }
 
 @keyframes toast-fireworks-burst {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(0.96) rotate(0deg);
     opacity: 0.45;
     filter: blur(0.4px);
@@ -4835,6 +4888,7 @@ a {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .ngm-number-input,
 .ngm-number-input-full,
 .ngm-price-input {
@@ -4921,6 +4975,7 @@ a {
   background: rgba(245, 166, 35, 0.05);
   border-color: rgba(245, 166, 35, 0.2);
 }
+
 .ngm-rule-top {
   display: flex;
   align-items: center;
@@ -5719,9 +5774,17 @@ a {
   border-radius: 50%;
   animation: vsTwinkle var(--d) ease-in-out infinite;
 }
+
 @keyframes vsTwinkle {
-  0%, 100% { opacity: 0.15; }
-  50%       { opacity: 0.9; }
+
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
 }
 
 .vs-confetti-layer {
@@ -5731,13 +5794,18 @@ a {
   z-index: 2;
   overflow: hidden;
 }
+
 .vs-cf {
   position: absolute;
   top: -12px;
   animation: vsCfFall linear forwards;
 }
+
 @keyframes vsCfFall {
-  to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  to {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 /* ── Content ── */
@@ -5753,9 +5821,17 @@ a {
 .vs-fullhouse-section {
   animation: vsPopIn 0.7s cubic-bezier(0.17, 0.67, 0.37, 1.4) both;
 }
+
 @keyframes vsPopIn {
-  from { transform: scale(0.3); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .vs-trophy-emoji {
@@ -5764,9 +5840,17 @@ a {
   animation: vsFloat 2.5s ease-in-out infinite;
   margin-bottom: 8px;
 }
+
 @keyframes vsFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-14px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
 }
 
 .vs-full-title {
@@ -5782,8 +5866,11 @@ a {
   animation: vsShimmer 2.5s linear infinite;
   margin-bottom: 16px;
 }
+
 @keyframes vsShimmer {
-  to { background-position: 200% center; }
+  to {
+    background-position: 200% center;
+  }
 }
 
 /* ── Other category sections ── */
@@ -5791,9 +5878,17 @@ a {
   animation: vsSlideUp 0.6s ease both;
   margin-top: 28px;
 }
+
 @keyframes vsSlideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .vs-line-title {
@@ -5822,7 +5917,7 @@ a {
   margin: 16px auto 0;
   backdrop-filter: blur(12px);
   box-shadow: 0 0 32px rgba(245, 166, 35, 0.12),
-              inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .vs-winner-card .ticket-card {
@@ -5892,6 +5987,7 @@ a {
   letter-spacing: 0.5px;
   animation: vsSlideUp 0.6s 0.6s ease both;
 }
+
 .vs-past-btn:hover {
   background: rgba(245, 166, 35, 0.22);
   transform: translateY(-2px);
@@ -5901,6 +5997,7 @@ a {
 .settings-field {
   margin-bottom: 24px;
 }
+
 .settings-label {
   display: block;
   font-size: 0.9rem;
@@ -5909,15 +6006,16 @@ a {
   margin-bottom: 4px;
 }
 
-@media screen and (max-width: 500px){
-  .vs-trophy-emoji{
+@media screen and (max-width: 500px) {
+  .vs-trophy-emoji {
     font-size: 54px;
   }
-} 
+}
 
 
 .ticket-cell.active:empty {
-  background: rgba(24, 24, 24, 0.11); /* subtle dark tint */
+  background: rgba(24, 24, 24, 0.11);
+  /* subtle dark tint */
   cursor: default;
 }
 
@@ -5928,26 +6026,28 @@ a {
     max-width: 95% !important;
     margin: 10px auto;
   }
-  
+
   .ngm-section {
     padding: 16px 14px !important;
   }
-  
+
   .ngm-header {
     padding: 16px 14px 12px !important;
     gap: 10px !important;
   }
-  
+
   .ngm-fields {
-    grid-template-columns: 1fr !important; /* Stack Price and Slot vertically on mobile */
+    grid-template-columns: 1fr !important;
+    /* Stack Price and Slot vertically on mobile */
     gap: 12px !important;
   }
-  
+
   .ngm-rules {
-    grid-template-columns: 1fr !important; /* Stack winning categories vertically on mobile */
+    grid-template-columns: 1fr !important;
+    /* Stack winning categories vertically on mobile */
     gap: 8px !important;
   }
-  
+
   .ngm-actions {
     padding: 12px 14px !important;
   }
@@ -5971,18 +6071,19 @@ a {
     background: transparent;
   }
 
-  .sp-table, 
-  .sp-table thead, 
-  .sp-table tbody, 
-  .sp-table th, 
-  .sp-table td, 
+  .sp-table,
+  .sp-table thead,
+  .sp-table tbody,
+  .sp-table th,
+  .sp-table td,
   .sp-table tr {
     display: block;
     width: 100%;
   }
 
   .sp-table thead {
-    display: none; /* Hide traditional headers */
+    display: none;
+    /* Hide traditional headers */
   }
 
   .sp-table tbody tr {
@@ -6252,7 +6353,7 @@ a {
   .metrics-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .breakdown-grid {
     grid-template-columns: 1fr;
   }
@@ -6484,6 +6585,7 @@ a {
     align-items: flex-start;
     gap: 6px;
   }
+
   .preview-item-meta {
     text-align: left;
   }
@@ -6502,6 +6604,7 @@ a {
     gap: 12px;
   }
 }
+
 .preview-actions {
   display: flex;
   gap: 10px;
@@ -6513,6 +6616,7 @@ a {
     flex-direction: column;
     gap: 8px;
   }
+
   .preview-actions button {
     width: 100% !important;
   }
@@ -6620,10 +6724,10 @@ a {
     padding: 12px;
   }
 
-  .day-group{
+  .day-group {
     padding: 16px 0px;
   }
-  
+
   .game-item-right {
     width: 100%;
     justify-content: space-between;
@@ -6631,7 +6735,7 @@ a {
     padding-top: 8px;
     gap: 8px;
   }
-  
+
   .day-group-game-item.selected .game-item-right {
     border-top-color: rgba(0, 0, 0, 0.1);
   }
