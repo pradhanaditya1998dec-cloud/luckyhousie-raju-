@@ -1090,7 +1090,7 @@ export default function AdminPage() {
                         <label>Every</label>
                         <input type="number" min="2" max="30" value={autoDrawInterval}
                           onChange={e => setAutoDrawInterval(Math.max(2, parseInt(e.target.value) || 8))}
-                          disabled={autoDrawEnabled} className="interval-input" />
+                          disabled={!isSuperAdmin || autoDrawEnabled} className="interval-input" />
                         <label>seconds</label>
                       </div>
                       {autoDrawEnabled
