@@ -430,4 +430,43 @@ export async function updateGameRulesAndPrizes(gameId, rules, prizes) {
   });
 }
 
+export async function clearAllPastData() {
+  // 1. Delete all bookings in batches
+  const bookingsSnap = await getDocs(collection(db, "bookings"));
+  let batch = writeBatch(db);
+  let count = 0;
+  for (const docSnap of bookingsSnap.docs) {
+    batch.delete(docSnap.ref);
+    count++;
+    if (count % 400 === 0) {
+      await batch.commit();
+      batch = writeBatch(db);
+    }
+  }
+  if (count % 400 !== 0) {
+    await batch.commit();
+  }
+
+  // 2. Delete all games except _settings and _meta
+  const gamesSnap = await getDocs(collection(db, "games"));
+  let batch2 = writeBatch(db);
+  let gameCount = 0;
+  for (const docSnap of gamesSnap.docs) {
+    if (docSnap.id === "_settings") continue;
+    if (docSnap.id === "_meta") {
+      batch2.set(doc(db, "games", "_meta"), { activeGameId: null });
+      continue;
+    }
+    batch2.delete(docSnap.ref);
+    gameCount++;
+    if (gameCount % 400 === 0) {
+      await batch2.commit();
+      batch2 = writeBatch(db);
+    }
+  }
+  if (gameCount % 400 !== 0) {
+    await batch2.commit();
+  }
+}
+
 

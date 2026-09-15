@@ -2,9 +2,13 @@
 import React from "react";
 
 export default function BookingListModal({ onClose, tickets = {} }) {
-    // Convert tickets object to array and sort by ID
-    const allTickets = Object.values(tickets)
-        .sort((a, b) => parseInt(a.id.slice(1)) - parseInt(b.id.slice(1)));
+    // Convert tickets object to array and sort by numeric ID safely
+    const allTickets = Object.values(tickets || {})
+        .sort((a, b) => {
+            const numA = parseInt(a?.id?.replace(/\D/g, "") || "0", 10);
+            const numB = parseInt(b?.id?.replace(/\D/g, "") || "0", 10);
+            return numA - numB;
+        });
     const bookedCount = allTickets.filter(t => t.status === 'booked').length;
 
     return (

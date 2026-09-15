@@ -677,46 +677,61 @@ export default function GamePage() {
         </div>
       )}
 
-      <header className="site-header">
-        <div className="header-content">
-          <div>
-            <h1 className="site-title">Lucky Housie</h1>
-            {/* <p className="site-subtitle">
-              {gameId ? `Daily Housie — ${formatGameId(gameId)}` : "Daily Housie"}
-            </p> */}
-            {game && <div className={`game-status ${status.cls}`}>{status.label}</div>}
-          </div>
+      {/* Hamburger Menu — fixed top right */}
+      <button
+        className="hamburger"
+        onClick={() => setMenuOpen(o => !o)}
+        aria-label="Menu"
+        aria-expanded={menuOpen}
+      >
+        <span /><span /><span />
+      </button>
 
-          {/* Hamburger (both mobile & desktop) */}
-          <button
-            className="hamburger"
-            onClick={() => setMenuOpen(o => !o)}
-            aria-label="Menu"
-            aria-expanded={menuOpen}
-          >
-            <span /><span /><span />
-          </button>
-        </div>
-
-        {/* Generic Dropdown */}
-        {menuOpen && (
-          <>
-            <div
-              onClick={() => setMenuOpen(false)}
-              style={{ position: 'fixed', inset: 0, zIndex: 99 }}
-            />
-            <nav className="dropdown-menu" onClick={() => setMenuOpen(false)}>
-              <button className="dropdown-link" onClick={() => setActiveModal('rules')}>📋 Rules</button>
-              <button className="dropdown-link" onClick={() => setActiveModal('winners')}>🏆 Past Winners</button>
-              <button className="dropdown-link" onClick={() => setActiveModal('bookings')}>🎟️ Booking List</button>
-            </nav>
-          </>
-        )}
-      </header>
+      {/* Generic Dropdown */}
+      {menuOpen && (
+        <>
+          <div
+            onClick={() => setMenuOpen(false)}
+            style={{ position: 'fixed', inset: 0, zIndex: 998 }}
+          />
+          <nav className="dropdown-menu">
+            <button
+              className="dropdown-link"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveModal('rules');
+                setMenuOpen(false);
+              }}
+            >
+              📋 Rules
+            </button>
+            <button
+              className="dropdown-link"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveModal('winners');
+                setMenuOpen(false);
+              }}
+            >
+              🏆 Past Winners
+            </button>
+            <button
+              className="dropdown-link"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveModal('bookings');
+                setMenuOpen(false);
+              }}
+            >
+              🎟️ Booking List
+            </button>
+          </nav>
+        </>
+      )}
 
       {!game?.winners?.fullHouse && !game?.winners?.secondFullHouse && (
         <div>
-          <img className="tambola-banner" src="/assets/banner-2.webp" alt="Welcome to Housie" />
+          <img className="tambola-banner" src="/assets/housie-banner.webp" alt="Welcome to Housie" />
         </div>
       )}
 
@@ -858,16 +873,63 @@ export default function GamePage() {
 
 
             {game?.rules && (
-              <div className="active-rules-bar">
-                <span className="active-rules-label">💡 Active prizes:</span>
-                {["topLine", "middleLine", "lastLine", "corners", "quickSeven", "fullHouse", "secondFullHouse"].map(r =>
-                  game.rules[r] ? (
-                    <span key={r} className="active-rule-chip">
-                      {r === "corners" ? "🔶 Corners" : null}
-                      {{ topLine: "🎯 Top Line", middleLine: "🎯 Middle Line", lastLine: "🎯 Last Line", quickSeven: "⚡ Quick 7", fullHouse: "🏆 Full House", secondFullHouse: "🏆 2nd Full House" }[r]}
-                    </span>
-                  ) : null
-                )}
+              <div className="active-rules-container">
+                <div className="house-rules-title">HOUSE RULES</div>
+                <div className="active-rules-bar">
+                  {["topLine", "middleLine", "lastLine", "quickSeven", "corners", "fullHouse", "secondFullHouse"].map(r => {
+                    if (!game.rules[r]) return null;
+                    const configs = {
+                      topLine: {
+                        label: "Top Line",
+                        color: "#60a5fa",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                      },
+                      middleLine: {
+                        label: "Middle Line",
+                        color: "#c084fc",
+                        italic: true,
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 3 21 12 12 21 3 12"></polygon><circle cx="12" cy="12" r="2" fill="currentColor"></circle></svg>
+                      },
+                      lastLine: {
+                        label: "Bottom Line",
+                        color: "#f472b6",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                      },
+                      quickSeven: {
+                        label: "Quick 7",
+                        color: "#34d399",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h7v8l10-12h-7z" /></svg>
+                      },
+                      corners: {
+                        label: "Corners",
+                        color: "#fb923c",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><rect x="4" y="4" width="16" height="16" rx="2" /></svg>
+                      },
+                      fullHouse: {
+                        label: "Full House",
+                        color: "#f87171",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                      },
+                      secondFullHouse: {
+                        label: "2nd Full House",
+                        color: "#ef4444",
+                        icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                      },
+                    };
+                    const cfg = configs[r];
+                    if (!cfg) return null;
+
+                    return (
+                      <span
+                        key={r}
+                        className={`active-rule-chip ${cfg.italic ? "active-rule-chip-italic" : ""}`}
+                      >
+                        <span style={{ color: cfg.color, display: 'inline-flex', alignItems: 'center' }}>{cfg.icon}</span>
+                        <span>{cfg.label}</span>
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
             )}
 

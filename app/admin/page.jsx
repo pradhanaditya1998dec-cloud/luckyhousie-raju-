@@ -10,17 +10,18 @@ import {
   reopenGame,
   subscribeAdminSettings, saveAdminSettings,
   updateGameRulesAndPrizes,
+  clearAllPastData,
 } from "../lib/gameStore";
 import { checkWinners, WIN_TYPES, WIN_LABELS } from "../lib/tambola";
 import { auth } from "../lib/firebase";
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import NumberBoard from "../components/NumberBoard";
 import BookTicket from "../components/BookTicket";
 import BookingsTable from "../components/BookingsTable";
 import PastWinnersTable from "../components/PastWinnersTable";
 import ConfirmModal from "../components/ConfirmModal";
 import NewGameModal from "../components/NewGameModal";
 import EditGameModal from "../components/EditGameModal";
+import ChangePasswordModal from "../components/ChangePasswordModal";
 import Toast, { useToast } from "../components/Toast";
 import ProfitTab from "../components/ProfitTab";
 import RiggingTab from "../components/RiggingTab";
@@ -180,6 +181,7 @@ export default function AdminPage() {
   // Modals
   const [newGameModalOpen, setNewGameModalOpen] = useState(false);
   const [editGameModalOpen, setEditGameModalOpen] = useState(false);
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
   const [modal, setModal] = useState({ open: false });
 
   // Auto-draw
@@ -808,6 +810,26 @@ export default function AdminPage() {
     });
   }
 
+  function confirmClearAllData() {
+    if (!isSuperAdmin) return;
+    setModal({
+      open: true,
+      title: "Clear All Past Data?",
+      message: "Are you sure you want to permanently delete ALL past games, bookings, winner records, and profit history? This action cannot be undone.",
+      confirmLabel: "Yes, Clear Everything",
+      danger: true,
+      onConfirm: async () => {
+        setModal(m => ({ ...m, open: false }));
+        try {
+          await clearAllPastData();
+          success("All past games, bookings, and profit data cleared.");
+        } catch (err) {
+          error("Failed to clear data: " + err.message);
+        }
+      },
+    });
+  }
+
   const ticketList = Object.values(tickets).sort((a, b) => a.id.localeCompare(b.id));
   const freeTickets = ticketList.filter(t => t.status === "free");
   const bookedTickets = ticketList.filter(t => t.status === "booked");
@@ -970,6 +992,12 @@ export default function AdminPage() {
           onCancel={() => setEditGameModalOpen(false)}
         />
 
+        <ChangePasswordModal
+          open={changePasswordModalOpen}
+          onCancel={() => setChangePasswordModalOpen(false)}
+          onSuccess={(msg) => success(msg)}
+        />
+
         {/* Content */}
         <div className="admin-content-wrap">
           <div className="admin-content">
@@ -980,13 +1008,33 @@ export default function AdminPage() {
 
                 {/* Game Controls */}
                 <section className="admin-card">
-                  <h2>Game Controls</h2>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", flexWrap: "wrap", gap: "10px" }}>
+                    <h2>Game Controls</h2>
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <button
+                        onClick={() => setChangePasswordModalOpen(true)}
+                        className="admin-btn outline"
+                        style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", padding: "6px 12px" }}
+                      >
+                        🔑 Change Admin Password
+                      </button>
+                      {isSuperAdmin && (
+                        <button
+                          onClick={confirmClearAllData}
+                          className="admin-btn outline danger"
+                          style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", padding: "6px 12px", color: "#ff4d4f", borderColor: "rgba(255,77,79,0.3)" }}
+                        >
+                          🗑️ Clear All Past Data
+                        </button>
+                      )}
+                    </div>
+                  </div>
 
                   {/* Active rules badge */}
                   {game?.rules && (
-                    <div className="active-rules-bar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
+                    <div className="admin-active-prizes-box">
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
-                        <span className="active-rules-label" style={{ marginRight: "4px" }}>Active prizes:</span>
+                        <span className="active-rules-label" style={{ marginRight: "4px" }}>ACTIVE PRIZES:</span>
                         {["topLine", "middleLine", "lastLine", "corners", "quickSeven", "fullHouse", "secondFullHouse"].map(r =>
                           game.rules[r] ? (
                             <span key={r} className="active-rule-chip">
@@ -998,8 +1046,7 @@ export default function AdminPage() {
                       </div>
                       <button
                         onClick={() => setEditGameModalOpen(true)}
-                        className="admin-btn outline"
-                        style={{ padding: "4px 10px", fontSize: "0.75rem", height: "30px", display: "flex", alignItems: "center", gap: "4px" }}
+                        className="admin-edit-prizes-btn"
                       >
                         ✏️ Edit Prizes & Rules
                       </button>
@@ -1086,13 +1133,6 @@ export default function AdminPage() {
                       {autoDrawEnabled && <span className="autodraw-countdown">Next in {autoCountdown}s</span>}
                     </div>
                     <div className="autodraw-controls">
-                      <div className="interval-control">
-                        <label>Every</label>
-                        <input type="number" min="2" max="30" value={autoDrawInterval}
-                          onChange={e => setAutoDrawInterval(Math.max(2, parseInt(e.target.value) || 8))}
-                          disabled={!isSuperAdmin || autoDrawEnabled} className="interval-input" />
-                        <label>seconds</label>
-                      </div>
                       {autoDrawEnabled
                         ? <button onClick={stopAutoDraw} className="admin-btn danger">⏸ Stop Auto</button>
                         : <button onClick={startAutoDraw} disabled={game?.status !== "live"} className="admin-btn primary">▶ Start Auto</button>
@@ -1160,14 +1200,14 @@ export default function AdminPage() {
                 {/* WhatsApp Support settings */}
                 <section className="admin-card">
                   <h2>WhatsApp Support Settings</h2>
-                  <p className="hint">Include country code, no + or spaces. E.g. <code>917628863362</code></p>
+                  <p className="hint">Include country code, no + or spaces. E.g. <code>919383727272</code></p>
 
                   <form onSubmit={handleSaveSettings} style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "12px" }}>
                     <div style={{ display: "flex", gap: "10px", alignItems: "stretch" }}>
                       <input
                         type="text"
                         className="admin-input"
-                        placeholder="917628863362"
+                        placeholder="919383727272"
                         value={settingsForm.adminPhone}
                         onChange={e => setSettingsForm(f => ({ ...f, adminPhone: e.target.value }))}
                         style={{ flex: 1 }}
@@ -1200,32 +1240,7 @@ export default function AdminPage() {
                   </form>
                 </section>
 
-                {/* Number Board
-                  BUG FIX 2: key={gameId} forces React to fully unmount + remount
-                  the NumberBoard whenever a new game is created, so any internal
-                  highlighted/selected state is wiped clean.
-                  The calledNumbers prop already resets to [] because game is set to
-                  null on new game creation, but the key ensures even internal
-                  component state (e.g. hover, last-called highlight) is also cleared.
-                */}
-                {isSuperAdmin && (
-                  <section className="admin-card admin-board-card">
-                    <h2>Number Board</h2>
-                    <p className="hint">
-                      {game?.status === "live"
-                        ? "Number board of the current live game."
-                        : game?.status === "closed"
-                          ? "Game ended — create a new game to play again"
-                          : "Start the game to view the number board"}
-                    </p>
-                    <NumberBoard
-                      key={gameId ?? "empty"}
-                      calledNumbers={calledArr}
-                      interactive={false}
-                      onPickNumber={drawOne}
-                    />
-                  </section>
-                )}
+
 
               </>)}
 

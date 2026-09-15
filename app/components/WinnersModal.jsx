@@ -57,7 +57,9 @@ export default function WinnersModal({ onClose }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAllPastGames().then(g => { setGames(g); setLoading(false); });
+        getAllPastGames()
+            .then(g => { setGames(Array.isArray(g) ? g : []); setLoading(false); })
+            .catch(err => { console.error("Error fetching past games:", err); setLoading(false); });
     }, []);
 
     return (
