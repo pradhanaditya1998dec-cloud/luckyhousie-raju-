@@ -1,8 +1,9 @@
 "use client";
-// app/admin/components/Toast.jsx
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function Toast({ toasts, onRemove }) {
+  if (!toasts || toasts.length === 0) return null;
+
   return (
     <div className="toast-container">
       {toasts.map(t => (
@@ -14,9 +15,9 @@ export default function Toast({ toasts, onRemove }) {
 
 function ToastItem({ toast, onRemove }) {
   useEffect(() => {
-    const timer = setTimeout(() => onRemove(toast.id), toast.duration || 4000);
+    const timer = setTimeout(() => onRemove(toast.id), toast.duration || 4500);
     return () => clearTimeout(timer);
-  }, [toast.id]);
+  }, [toast.id, toast.duration, onRemove]);
 
   return (
     <div className={`toast-item toast-${toast.type || "info"}`} onClick={() => onRemove(toast.id)}>
@@ -32,7 +33,7 @@ function ToastItem({ toast, onRemove }) {
 export function useToast() {
   const [toasts, setToasts] = useState([]);
 
-  function addToast(message, type = "info", duration = 4000) {
+  function addToast(message, type = "info", duration = 4500) {
     const id = Date.now() + Math.random();
     setToasts(prev => [...prev, { id, message, type, duration }]);
   }
@@ -41,13 +42,13 @@ export function useToast() {
     setToasts(prev => prev.filter(t => t.id !== id));
   }
 
-  return { toasts, addToast, removeToast,
+  return {
+    toasts,
+    addToast,
+    removeToast,
     success: (msg) => addToast(msg, "success"),
     error: (msg) => addToast(msg, "error"),
     warning: (msg) => addToast(msg, "warning"),
     info: (msg) => addToast(msg, "info"),
   };
-}
-
-// Need useState imported
-import { useState } from "react";
+}

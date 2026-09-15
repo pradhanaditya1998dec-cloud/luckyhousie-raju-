@@ -723,7 +723,7 @@ export default function AdminPage() {
         .map(([k]) => ({ topLine: "Top", middleLine: "Middle", lastLine: "Last", corners: "Corners", quickSeven: "Quick 7", fullHouse: "Full House", secondFullHouse: "2nd Full House" }[k]))
         .join(", ");
       const priceLabel = ticketPrice != null ? ` · ₹${ticketPrice}/ticket` : "";
-      success(`✅ Game created! ${ticketCount} tickets${priceLabel} · Prizes: ${ruleNames}`);
+      success(`✨ Game created successfully! ${ticketCount} tickets${priceLabel} · Prizes: ${ruleNames}`);
     } catch (e) { toastError("Init failed: " + e.message); }
     finally { setGenerating(false); }
   }
@@ -751,8 +751,12 @@ export default function AdminPage() {
       onConfirm: async () => {
         setModal(m => ({ ...m, open: false }));
         stopAutoDraw();
-        await setGameStatus(gameId, "closed");
-        success("Game ended.");
+        try {
+          await setGameStatus(gameId, "closed");
+          success("🏁 Game ended successfully.");
+        } catch (err) {
+          toastError("Failed to end game: " + err.message);
+        }
       },
     });
   }
@@ -766,10 +770,14 @@ export default function AdminPage() {
       danger: false,
       onConfirm: async () => {
         setModal(m => ({ ...m, open: false }));
-        await setGameStatus(gameId, "live");
-        gameRef.current = { ...(gameRef.current || {}), status: "live" };
-        success("Game started.");
-        scheduleAutoDrawStart();
+        try {
+          await setGameStatus(gameId, "live");
+          gameRef.current = { ...(gameRef.current || {}), status: "live" };
+          success("🎮 Game started! Number calling is active.");
+          scheduleAutoDrawStart();
+        } catch (err) {
+          toastError("Failed to start game: " + err.message);
+        }
       },
     });
   }

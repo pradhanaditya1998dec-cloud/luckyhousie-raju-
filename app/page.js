@@ -224,20 +224,24 @@ export default function GamePage() {
       }
     }
 
-    if (prev === "waiting" && curr === "live") {
-      playBlockingAudio("game-start.mp3");
+    if (prev !== null && prev !== curr) {
+      if (curr === "live") {
+        playBlockingAudio("game-start.mp3");
+        showTimedToast({
+          id: Date.now(),
+          user: "Game Started!",
+          label: "The host has started the game! Good luck to all players!",
+          isError: false,
+        }, 5000);
+      } else if (curr === "closed") {
+        showTimedToast({
+          id: Date.now(),
+          user: "Game Ended",
+          label: "The host has concluded this game. Thank you for playing!",
+          isWarning: true,
+        }, 5000);
+      }
     }
-
-    // if (curr === "closed" && prev !== "closed" && prev !== null) {
-    //   // Only set fallback if fullHouse wasn't already won
-    //   // (if it was, the bingo onEnd callback handles the outro)
-    //   const hasFullHouse = !!game?.winners?.fullHouse;
-    //   if (!hasFullHouse) {
-    //     outroTimerRef.current = setTimeout(() => {
-    //       playAudioFileLooping("outro.wav");
-    //     }, 8000);
-    //   }
-    // }
 
     prevStatusRef.current = curr;
     return () => {
