@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Lucky Housie",
+  title: "Housie",
   description: "Play Tambola Online",
 };
 

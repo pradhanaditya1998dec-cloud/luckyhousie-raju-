@@ -35,7 +35,7 @@ export default function DisclaimerModal() {
                 {/* ── Scrollable body ── */}
                 <div className="disclaimer-body">
                     <p className="disclaimer-intro">
-                        Welcome to <strong>Lucky Housie</strong>! Joining means you agree to the following:
+                        Welcome to <strong>Housie</strong>! Joining means you agree to the following:
                     </p>
 
                     <ul className="disclaimer-list">
