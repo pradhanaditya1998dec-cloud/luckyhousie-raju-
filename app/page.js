@@ -224,23 +224,8 @@ export default function GamePage() {
       }
     }
 
-    if (prev !== null && prev !== curr) {
-      if (curr === "live") {
-        playBlockingAudio("game-start.mp3");
-        showTimedToast({
-          id: Date.now(),
-          user: "Game Started!",
-          label: "The host has started the game! Good luck to all players!",
-          isError: false,
-        }, 5000);
-      } else if (curr === "closed") {
-        showTimedToast({
-          id: Date.now(),
-          user: "Game Ended",
-          label: "The host has concluded this game. Thank you for playing!",
-          isWarning: true,
-        }, 5000);
-      }
+    if (prev === "waiting" && curr === "live") {
+      playBlockingAudio("game-start.mp3");
     }
 
     prevStatusRef.current = curr;
